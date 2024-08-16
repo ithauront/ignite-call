@@ -4,6 +4,7 @@ import { ArrowRight } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { useRouter } from 'next/router'
 
 const claimUserNameFormSchema = z.object({
   userName: z
@@ -12,7 +13,7 @@ const claimUserNameFormSchema = z.object({
     .regex(/^([a-z\\-]+)$/i, {
       message: 'Usuario pode ter apenas letras e hifens',
     })
-    .transform((username) => username.toLowerCase),
+    .transform((userName) => userName.toLowerCase()),
 })
 
 type ClaimUserNameFormData = z.infer<typeof claimUserNameFormSchema>
@@ -26,8 +27,12 @@ export function ClaimUserNameForm() {
     resolver: zodResolver(claimUserNameFormSchema),
   })
 
+  const router = useRouter()
+
   async function handleClaimUserName(data: ClaimUserNameFormData) {
-    console.log(data)
+    const { userName } = data
+
+    await router.push(`/register?userName=${userName}`)
   }
 
   return (

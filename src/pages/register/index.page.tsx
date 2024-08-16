@@ -4,6 +4,8 @@ import { ArrowRight } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 const registerFormSchema = z.object({
   userName: z
@@ -12,7 +14,7 @@ const registerFormSchema = z.object({
     .regex(/^([a-z\\-]+)$/i, {
       message: 'Usuario pode ter apenas letras e hifens',
     })
-    .transform((username) => username.toLowerCase),
+    .transform((username) => username.toLowerCase()),
   name: z.string().min(3, { message: 'O nome precisa ter no minimo 3 letras' }),
 })
 
@@ -22,10 +24,19 @@ export default function Register() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerFormSchema),
   })
+
+  const router = useRouter()
+
+  useEffect(() => {
+    if (router.query.userName) {
+      setValue('userName', String(router.query.userName))
+    }
+  }, [router.query?.userName, setValue])
 
   async function handleRegister(data: RegisterFormData) {
     console.log(data)
