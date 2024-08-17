@@ -11,6 +11,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@ignite-ui/react": "^2.2.4",
+    "@prisma/client": "^5.18.0",
     "@types/node": "22.2.0",
     "@types/react": "18.2.19",
     "@types/react-dom": "18.3.0",
@@ -25,6 +26,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@rocketseat/eslint-config": "^2.2.2"
+    "@rocketseat/eslint-config": "^2.2.2",
+    "prisma": "^5.18.0"
   }
 }
