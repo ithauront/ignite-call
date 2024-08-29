@@ -1,4 +1,11 @@
-import { Button, Heading, MultiStep, Text, TextArea } from '@ignite-ui/react'
+import {
+  Avatar,
+  Button,
+  Heading,
+  MultiStep,
+  Text,
+  TextArea,
+} from '@ignite-ui/react'
 import { ArrowRight } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -9,6 +16,8 @@ import { useSession } from 'next-auth/react'
 import { GetServerSideProps } from 'next'
 import { getServerSession } from 'next-auth'
 import { buildNextAuthOptions } from '../../api/auth/[...nextauth].api'
+import { api } from '../../../lib/axios'
+import { useRouter } from 'next/router'
 
 const updateProfileSchema = z.object({
   bio: z.string(),
@@ -27,9 +36,12 @@ export default function UpdateProfile() {
   } = useForm<UpdateProfileData>({
     resolver: zodResolver(updateProfileSchema),
   })
-
+  const router = useRouter()
   async function handleUpdateProfile(data: UpdateProfileData) {
-    console.log(data)
+    await api.put('/users/profile', {
+      bio: data.bio,
+    })
+    await router.push(`/schecule/${session.data?.user.userName}`)
   }
 
   return (
@@ -45,6 +57,10 @@ export default function UpdateProfile() {
       <ProfileBox as="form" onSubmit={handleSubmit(handleUpdateProfile)}>
         <label>
           <Text size="sm">Foto de perfil</Text>
+          <Avatar
+            src={session.data?.user.avatar_url}
+            alt={session.data?.user.name}
+          />
         </label>
 
         <label>
