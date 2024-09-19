@@ -41,7 +41,7 @@ export default function UpdateProfile() {
     await api.put('/users/profile', {
       bio: data.bio,
     })
-    await router.push(`/schecule/${session.data?.user.userName}`)
+    await router.push(`/schedule/${session.data?.user.userName}`)
   }
 
   return (
