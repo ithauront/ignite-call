@@ -87,14 +87,10 @@ GOOGLE_CLIENT_SECRET=
 NEXTAUTH_SECRET=
 ```
 You can follow [this guide](https://next-auth.js.org/getting-started/introduction) to create your own Google OAuth credentials.  
-You can generate a secure `NEXTAUTH_SECRET` using:
-
-```bash
-openssl rand -base64 32
-```
 
 
 # Run the development server
+```bash
 pnpm dev
 ```
 
